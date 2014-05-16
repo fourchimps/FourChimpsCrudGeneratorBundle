@@ -1,0 +1,10 @@
+{% raw %}
+{% extends 'FourChimpsAdminBundle::dashboard.html.twig' %}
+
+{% block body %}{% endraw %}
+    {% if form_name is defined %}
+    {% raw %}
+    {% form_theme {% endraw %}{{form_name}}{% raw %} 'FourChimpsThemeBundle:Form:theme.html.twig' %}{% endraw %}
+    {% endif %}
+    {% raw %}
+{% endraw %}

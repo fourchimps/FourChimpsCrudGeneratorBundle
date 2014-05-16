@@ -1,0 +1,22 @@
+{# Output is another twig template - need to escape any twig commands as raw #}
+{% include 'views/others/header.html.twig' with {'form_name' : 'form'} %}
+
+<h1>{{ entity }} creation</h1>
+
+<form class="well form-horizontal" action="{{ "{{ path('admin_"~ route_name_prefix ~"_create') }}" }}" method="post" {{ "{{ form_enctype(form) }}" }}>
+    {{ "{{ form_widget(form) }}" }}
+
+    <div class="form-actions">
+        <button class="btn btn-success" type="submit">
+        	<i class="icon-white icon-plus-sign"></i>
+        	Create
+        </button>
+    </div>
+</form>
+
+{% set hide_edit, hide_delete = true, true %}
+{% include 'views/others/record_actions.html.twig' %}
+
+{% raw %}
+{% endblock %}
+{% endraw %}

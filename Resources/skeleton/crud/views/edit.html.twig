@@ -1,0 +1,21 @@
+{% include 'views/others/header.html.twig' with {'form_name' : 'edit_form'} %}
+
+<h1>{{ entity }} Edit</h1>
+
+<form class="well form-horizontal" action="{{ "{{ path('admin_"~ route_name_prefix ~"_update', { 'id': entity.id }) }}" }}" method="post" {{ "{{ form_enctype(edit_form) }}" }}>
+    {{ "{{ form_widget(edit_form) }}" }}
+
+    <div class="form-actions">
+        <button class="btn btn-success" type="submit">
+            <i class="icon-white icon-check"></i>
+            Save
+        </button>
+    </div>
+</form>
+
+{% set hide_edit, hide_delete = true, false %}
+{% include 'views/others/record_actions.html.twig' %}
+
+{% raw %}
+{% endblock %}
+{% endraw %}

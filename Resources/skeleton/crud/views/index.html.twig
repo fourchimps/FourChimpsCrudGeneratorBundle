@@ -1,0 +1,60 @@
+{# Output is another twig template - need to escape any twig commands as raw #}
+{% include 'views/others/header.html.twig' %}
+
+<h1>{{ entity }} list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+        {%- for field, metadata in fields %}
+
+            <th>{% raw %} {{ '{% endraw %} {{ field }}{% raw %} '|uncamelcase }}{% endraw %}</th>
+
+        {%- endfor %}
+
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{ '{% for entity in entities %}' }}
+        <tr>
+
+    {%- for field, metadata in fields %}
+        {%- if loop.first and ('show' in actions) %}
+
+            <td><a href="{{ "{{ path('admin_"~ route_name_prefix ~"_show', { 'id': entity.id }) }}" }}">{{ '{{ entity.'~ field|replace({'_': ''}) ~' }}' }}</a></td>
+
+        {%- elseif metadata.type in ['date', 'datetime'] %}
+
+            <td>{{ '{% if entity.'~ field|replace({'_': ''}) ~' %}{{ entity.'~ field|replace({'_': ''}) ~'|date(\'Y-m-d H:i:s\') }}{% endif%}' }}</td>
+
+        {%- else %}
+
+            <td>{{ '{{ entity.'~ field|replace({'_': ''}) ~' }}' }}</td>
+
+        {%- endif %}
+
+        {%- if loop.last %}
+
+            <td>
+                {%- include "views/others/actions.html.twig" %}
+            </td>
+
+        {%- endif %}
+    {%- endfor %}
+
+        </tr>
+    {{ '{% endfor %}' }}
+    </tbody>
+</table>
+
+{% if 'new' in actions %}
+	<a class = "btn btn-primary" href="{{ "{{ path('admin_"~ route_name_prefix ~"_new') }}" }}">
+		<i class="icon-white icon-plus-sign"></i>
+    	Create a new entry
+	</a>
+{% endif %}
+
+{% raw %}
+{% endblock %}
+{% endraw %}
